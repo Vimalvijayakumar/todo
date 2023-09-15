@@ -145,12 +145,25 @@ class _EditTodoState extends State<EditTodo> {
                               backgroundColor:
                                   MaterialStatePropertyAll(Colors.green)),
                           onPressed: () {
-                            BlocProvider.of<TodoListCubit>(context).updateTodo(
-                                widget.todoItem.id.toString(),
-                                TodoModel(
-                                    date: Timestamp.fromDate(DateTime.now()),
-                                    todoContent: _contentTextController.text,
-                                    todoHeading: _headingTextController.text));
+                            if (_headingTextController.text != "" &&
+                                _contentTextController.text != "") {
+                              BlocProvider.of<TodoListCubit>(context)
+                                  .updateTodo(
+                                      widget.todoItem.id.toString(),
+                                      TodoModel(
+                                          date: Timestamp.fromDate(
+                                              DateTime.now()),
+                                          todoContent:
+                                              _contentTextController.text,
+                                          todoHeading:
+                                              _headingTextController.text));
+                            } else if (_headingTextController.text == "") {
+                              ShowAlert.showToast(
+                                  "Heading Should not br empty");
+                            } else if (_contentTextController.text == "") {
+                              ShowAlert.showToast(
+                                  "Content Should not br empty");
+                            }
                           },
                           child: const Text(
                             "Update",

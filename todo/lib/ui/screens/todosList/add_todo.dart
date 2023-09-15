@@ -99,6 +99,17 @@ class _AddTodoState extends State<AddTodo> {
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.green)),
                       onPressed: () {
+                        if (_headingTextController.text != "" &&
+                            _contentTextController.text != "") {
+                          BlocProvider.of<TodoListCubit>(context).addTodo(
+                              Timestamp.fromDate(DateTime.now()),
+                              _headingTextController.text,
+                              _contentTextController.text);
+                        } else if (_headingTextController.text == "") {
+                          ShowAlert.showToast("Heading Should not br empty");
+                        } else if (_contentTextController.text == "") {
+                          ShowAlert.showToast("Content Should not br empty");
+                        }
                         BlocProvider.of<TodoListCubit>(context).addTodo(
                             Timestamp.fromDate(DateTime.now()),
                             _headingTextController.text,
